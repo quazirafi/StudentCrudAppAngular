@@ -44,6 +44,7 @@
 			background:lightblue;
 			color:white;
 		 }
+
       </style>
       
       <script language = "javascript">
@@ -53,7 +54,17 @@
 
          function layoutController ($scope) {  
 			$scope.listClicked = function(param){
-				alert(param);
+				if (param==="create"){
+					document.getElementById('createDiv').style.display = "block";
+					document.getElementById('showDiv').style.display = "none";
+				}
+				else if (param==="show"){
+					document.getElementById('showDiv').style.display = "block";
+					document.getElementById('createDiv').style.display = "none";
+				}
+			}
+			$scope.validation = function(){
+				alert("active!");
 			}
          }	  
       </script>      
@@ -77,23 +88,47 @@
 				</md-list>
 			</div>
             <div flex id = "contentRegion" >
-				<div style="background:gray;margin-top:100px;height:700px;width:600px;margin-left:400px;display:none">
+				<div id="createDiv" style="background:gray;margin-top:100px;height:700px;width:600px;margin-left:400px;display:none">
 					<p style="font-size:200%;padding-top:50px;color: white;text-align:center">Registration Form</p>
 					<form name="stdInfo" style="padding-top:20px">
-						<input placeholder="Name" style="width: 360px; height: 60px;" type="text" name="name"><br>
-						<br>
-						<input placeholder="Roll" style="width: 360px; height: 60px;" type="text" name="roll"><br>
-						<br>
-						<input placeholder="CGPA" style="width: 360px; height: 60px;" type="text" name="cgpa"><br>
-						<br>
-						<input placeholder="Batch" style="width: 360px; height: 60px;" type="text" name="year"><br>
-						<br>
-						<input placeholder="DOB" style="width: 360px; height: 60px;" type="date" name="dob"><br>
-						<br>
-						<input style="width: 200px; height: 40px;margin-top:30px" class="bttn" type="button" value="Save" onclick="validation()" ></input>
+						<md-input-container>
+							<input placeholder="Name" style="width: 360px; height: 60px; background:white" type="text" ng-model="name" name="name" required>
+   								<div ng-show = "stdInfo.name.$touched && stdInfo.name.$invalid" style="color:red" >
+									<div ng-show = "stdInfo.name.$error.required" >Name is required!</div>
+								</div>
+						</md-input-container>
+						<md-input-container>
+							<input placeholder="Roll" style="width: 360px; height: 60px; background:white" type="text" ng-model="roll" name="roll" ng-pattern="/^[0-9]+$/" required>
+							<div ng-show = "stdInfo.roll.$dirty && stdInfo.roll.$invalid" style="color:red" >
+								<div ng-show = "stdInfo.roll.$error.required" >Roll is required!</div>
+								<div ng-show = "stdInfo.roll.$error.pattern" >Only int is allowed!</div>
+							</div>
+						</md-input-container>
+						<md-input-container>
+							<input placeholder="CGPA" style="width: 360px; height: 60px; background:white" type="text" ng-model="cgpa" name='cgpa' ng-pattern="/^[0-9]+[.]+[0-9]+$/" required>
+   							<div ng-show = "stdInfo.cgpa.$dirty && stdInfo.cgpa.$invalid" style="color:red" >
+								<div ng-show = "stdInfo.cgpa.$error.required" >CGPA is required!</div>
+								<div ng-show = "stdInfo.cgpa.$error.pattern" >Only float is allowed!</div>
+							</div>
+						</md-input-container>
+						<md-input-container>
+							<input placeholder="Batch" style="width: 360px; height: 60px; background:white" type="text" ng-model="year" name="year" ng-pattern="/^[0-9]+$/" required>
+							<div ng-show = "stdInfo.year.$dirty && stdInfo.year.$invalid" style="color:red" >
+								<div ng-show = "stdInfo.year.$error.required" >Year is required!</div>
+								<div ng-show = "stdInfo.year.$error.pattern" >Only int is allowed!</div>
+							</div>
+						</md-input-container>
+						<md-input-container>
+							<input placeholder="DOB" style="width: 360px; height: 60px; background: white" type="date" ng-model="dob" name="dob" required>
+							<div ng-show = "stdInfo.dob.$touched && stdInfo.dob.$invalid" style="color:red" >
+								<div ng-show = "stdInfo.dob.$error.required" >DOB is required!</div>
+							</div>
+						</md-input-container><br>
+						<button style="width: 200px; height: 40px;margin-top:30px" class="bttn" value="Save" ng-click="validation()" 
+						ng-disabled="stdInfo.name.$invalid || stdInfo.roll.$invalid || stdInfo.cgpa.$invalid || stdInfo.year.$invalid || stdInfo.dob.$invalid"></button>
 					</form>
 				</div>
-				<div style="background:gray;margin-top:100px;height:700px;width:600px;margin-left:400px">
+				<div  id="showDiv" style="background:gray;margin-top:100px;height:700px;width:600px;margin-left:400px;display:none">
 					<p style="font-size:200%;padding-top:50px;color: white;text-align:center">Registered Students</p>
 					
 				</div>
