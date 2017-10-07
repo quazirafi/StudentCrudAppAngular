@@ -41,7 +41,7 @@
 			color: gray;
 		 }
 		 .bttn:hover{
-			background:lightblue;
+			background:#444242;
 			color:white;
 		 }
 
@@ -88,7 +88,7 @@
 				</md-list>
 			</div>
             <div flex id = "contentRegion" >
-				<div id="createDiv" style="background:gray;margin-top:100px;height:700px;width:600px;margin-left:400px;display:none">
+				<div id="createDiv" style="background:gray;margin-top:100px;height:760px;width:600px;margin-left:400px;display:none">
 					<p style="font-size:200%;padding-top:50px;color: white;text-align:center">Registration Form</p>
 					<form name="stdInfo" style="padding-top:20px">
 						<md-input-container>
@@ -99,21 +99,21 @@
 						</md-input-container>
 						<md-input-container>
 							<input placeholder="Roll" style="width: 360px; height: 60px; background:white" type="text" ng-model="roll" name="roll" ng-pattern="/^[0-9]+$/" required>
-							<div ng-show = "stdInfo.roll.$dirty && stdInfo.roll.$invalid" style="color:red" >
+							<div ng-show = "stdInfo.roll.$touched || (stdInfo.roll.$dirty && stdInfo.roll.$invalid)" style="color:red" >
 								<div ng-show = "stdInfo.roll.$error.required" >Roll is required!</div>
 								<div ng-show = "stdInfo.roll.$error.pattern" >Only int is allowed!</div>
 							</div>
 						</md-input-container>
 						<md-input-container>
 							<input placeholder="CGPA" style="width: 360px; height: 60px; background:white" type="text" ng-model="cgpa" name='cgpa' ng-pattern="/^[0-9]+[.]+[0-9]+$/" required>
-   							<div ng-show = "stdInfo.cgpa.$dirty && stdInfo.cgpa.$invalid" style="color:red" >
+   							<div ng-show = "stdInfo.cgpa.$touched || (stdInfo.cgpa.$dirty && stdInfo.cgpa.$invalid)" style="color:red" >
 								<div ng-show = "stdInfo.cgpa.$error.required" >CGPA is required!</div>
 								<div ng-show = "stdInfo.cgpa.$error.pattern" >Only float is allowed!</div>
 							</div>
 						</md-input-container>
 						<md-input-container>
 							<input placeholder="Batch" style="width: 360px; height: 60px; background:white" type="text" ng-model="year" name="year" ng-pattern="/^[0-9]+$/" required>
-							<div ng-show = "stdInfo.year.$dirty && stdInfo.year.$invalid" style="color:red" >
+							<div ng-show = "stdInfo.year.$touched || (stdInfo.year.$dirty && stdInfo.year.$invalid)" style="color:red" >
 								<div ng-show = "stdInfo.year.$error.required" >Year is required!</div>
 								<div ng-show = "stdInfo.year.$error.pattern" >Only int is allowed!</div>
 							</div>
@@ -124,8 +124,8 @@
 								<div ng-show = "stdInfo.dob.$error.required" >DOB is required!</div>
 							</div>
 						</md-input-container><br>
-						<button style="width: 200px; height: 40px;margin-top:30px" class="bttn" value="Save" ng-click="validation()" 
-						ng-disabled="stdInfo.name.$invalid || stdInfo.roll.$invalid || stdInfo.cgpa.$invalid || stdInfo.year.$invalid || stdInfo.dob.$invalid"></button>
+						<button style="width: 200px; height: 40px;margin-top:30px;" class="bttn" ng-click="validation()" 
+						ng-disabled="stdInfo.name.$invalid || stdInfo.roll.$invalid || stdInfo.cgpa.$invalid || stdInfo.year.$invalid || stdInfo.dob.$invalid">Save</button>
 					</form>
 				</div>
 				<div  id="showDiv" style="background:gray;margin-top:100px;height:700px;width:600px;margin-left:400px;display:none">
