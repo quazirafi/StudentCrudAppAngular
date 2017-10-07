@@ -134,7 +134,23 @@
 					<p style="font-size:200%;padding-top:50px;color: white;text-align:center">Registered Students</p>
 					<div id="stdTableDiv" style="height:450px;width:580px;margin-left:10px;overflow:auto">
 						<table id="stdTable" style="background:white;color:gray;overflow:auto">
-
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Roll</th>
+								<th>Age</th>
+								<th>Action</th>
+							</tr>
+							<tr ng-repeat="student in students">
+								<td>{{student.stdId}}</td>
+								<td>{{student.stdName}}</td>
+								<td>{{student.stdRoll}}</td>
+								<td>{{student.stdAge}}</td>
+								<td>
+									<input type="button" class="bttn2" ng-click="update({{student.stdId}})" value="update" ></input>
+									<input type="button" class="bttn2" ng-click="del({{student.stdId}})" value="delete" ></input>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -188,34 +204,9 @@
 					}
 				}
 				else if (param==="show"){
-					students = JSON.parse(sessionStorage.getItem("students"));
+					$scope.students = JSON.parse(sessionStorage.getItem("students"));
 					document.getElementById('showDiv').style.display = "block";
 					document.getElementById('createDiv').style.display = "none";
-					var stdTable = document.getElementById('stdTable');
-					stdTable.innerHTML = "";
-					var row2 = stdTable.insertRow(0);
-					var cells2 = new Array(5);
-					for (let j = 0; j < cells2.length ; ++j){
-						cells2[j] = row2.insertCell(j);
-					}
-					cells2[0].innerHTML = '<b>ID</b>';	
-					cells2[1].innerHTML = '<b>Name</b>';
-					cells2[2].innerHTML = '<b>Roll</b>';
-					cells2[3].innerHTML = '<b>Age</b>';
-					cells2[4].innerHTML = '<b>Action</b>';
-					for (let i = 0; i < students.length ; ++i){
-						var row = stdTable.insertRow(i+1);
-						var cells = new Array(5);
-						for (let j = 0; j < cells.length ; ++j){
-							cells[j] = row.insertCell(j);
-						}
-						cells[0].innerHTML = students[i].stdId;
-						cells[1].innerHTML = students[i].stdName;
-						cells[2].innerHTML = students[i].stdRoll;
-						cells[3].innerHTML = students[i].stdAge;
-						cells[4].innerHTML = '<input type="button" class="bttn2" ng-click="update('+students[i].stdId+')" value="update" ></input><button class="bttn2" onclick="del('+students[i].stdId+')" >Delete</button>';
-					}
-					
 				}
 			}
 			$scope.update = function(id){
